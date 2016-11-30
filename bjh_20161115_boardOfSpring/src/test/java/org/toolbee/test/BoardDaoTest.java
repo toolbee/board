@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.naming.directory.SearchControls;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.toolbee.dao.BoardDao;
 import org.toolbee.domain.BoardVO;
 import org.toolbee.domain.Criteria;
+import org.toolbee.domain.SearchCriteria;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -106,20 +108,40 @@ public class BoardDaoTest {
 //		logger.info("/board/read/?bno=12&perPageNum=20");
 //		logger.info(uriComponents.toString());
 //	}
-
+//
+//	@Test
+//	public void testURI2() throws Exception {
+//
+//		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+//				.path("/{module}/{page}")
+//				.queryParam("bno", 12)
+//				.queryParam("perPageNum", 20)
+//				.build()
+//				.expand("board","read")
+//				.encode();
+//		
+//		logger.info("/board/read?bno=12&perPageNum=20");
+//		logger.info(uriComponents.toString());
+//		
+//	}
+	
 	@Test
-	public void testURI2() throws Exception {
-
-		UriComponents uriComponents = UriComponentsBuilder.newInstance()
-				.path("/{module}/{page}")
-				.queryParam("bno", 12)
-				.queryParam("perPageNum", 20)
-				.build()
-				.expand("board","read")
-				.encode();
+	public void testDynamic1() throws Exception {
 		
-		logger.info("/board/read?bno=12&perPageNum=20");
-		logger.info(uriComponents.toString());
+		SearchCriteria cri = new SearchCriteria();
+		cri.setPage(1);
+		cri.setKeyword("글");
+		cri.setSearchType("t");
 		
+		logger.info("============================================");
+		
+		List<BoardVO> list = dao.listSearch(cri);
+		
+		for (BoardVO boardVO : list) {
+			logger.info(boardVO.getBno() + ": " + boardVO.getTitle());
+		}
+		
+		logger.info("============================================");
+		logger.info("COUNT :" + dao.listSearchCount(cri));
 	}
 }

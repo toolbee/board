@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.toolbee.domain.BoardVO;
 import org.toolbee.domain.Criteria;
+import org.toolbee.domain.SearchCriteria;
 
 public interface BoardDao {
 
@@ -22,4 +23,8 @@ public interface BoardDao {
 	public List<BoardVO> listCriteria(Criteria cri) throws Exception;
 	
 	public int countPaging(Criteria cri) throws Exception;
+	
+	public List<BoardVO> listSearch(SearchCriteria cri) throws Exception;
+	
+	public int listSearchCount(SearchCriteria cri) throws Exception;
 }

@@ -48,7 +48,8 @@ public class BoardController {
 		rttr.addFlashAttribute("msg", "SUCCESS");
 
 		//		return "/board/success";
-		return "redirect:/board/listPage";
+//		return "redirect:/board/listPage";
+		return "redirect:/sboard/list";
 
 	}
 
@@ -84,28 +85,32 @@ public class BoardController {
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		
 
-		return "redirect:/board/listPage";
-
+//		return "redirect:/board/listPage";
+		return "redirect:/sboard/list";
 	}
 
 
-	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public void modifyGET(int bno, Model model) throws Exception {
+	@RequestMapping(value = "/modifyPage", method = RequestMethod.GET)
+	public void modifyPagingGET(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
 
 		model.addAttribute(service.read(bno));
 
 	}
 
 
-	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+	@RequestMapping(value = "/modifyPage", method = RequestMethod.POST)
+	public String modifyPagingPOST(BoardVO board, Criteria cri, RedirectAttributes rttr) throws Exception {
 
 		logger.info("modify post.........");
 
 		service.modify(board);
-		rttr.addFlashAttribute("msg", "SUCCESS");
 
-		return "redirect:/board/listPage";
+		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("perPageNum", cri.getPerPageNum());
+		rttr.addFlashAttribute("msg", "SUCCESS");
+		
+//		return "redirect:/board/listPage";
+		return "redirect:/sboard/list";
 
 	}
 

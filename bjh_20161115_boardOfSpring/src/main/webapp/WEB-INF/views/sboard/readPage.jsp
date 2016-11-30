@@ -19,10 +19,10 @@
 				</div>
 
 				<form role="form" action="modifyPage" method="post">
-					<input type='hidden' name='bno' value="${boardVO.bno}">
-					<input type='hidden' name='page' value="${cri.page}">
-					<input type='hidden' name='perPageNum' value="${cri.perPageNum}">
-					
+					<input type='hidden' name='bno' value="${boardVO.bno}"> <input
+						type='hidden' name='page' value="${cri.page}"> <input
+						type='hidden' name='perPageNum' value="${cri.perPageNum}">
+
 				</form>
 
 				<div class="box-body">
@@ -56,6 +56,7 @@
 
 <%@include file="../include/footer.jsp"%>
 
+<!-- list / modify / remove -->
 <script type="text/javascript">
 	$(document).ready(function() {
 		var formObj = $("form[role = 'form']");

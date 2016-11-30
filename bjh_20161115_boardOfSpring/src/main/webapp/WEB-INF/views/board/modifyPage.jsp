@@ -19,7 +19,10 @@
 				</div>
 
 				<form role="form" method="post">
-
+				
+					<input type='hidden' name='page' value="${cri.page}">
+					<input type='hidden' name='perPageNum' value="${cri.perPageNum}">
+					
 					<div class="box-body">
 						<div class="form-group">
 							<label for="exampleInputEmail1">No</label> <input type="text"
@@ -64,7 +67,8 @@
 		});
 
 		$(".btn-warning").on("click", function() {
-			self.location = "/board/listPage";
+			//self.location = "/board/listPage?page=${cri.page}&perPageNum=${cri.perPageNum}";
+			self.location = "/sboard/list?page=${cri.page}&perPageNum=${cri.perPageNum}";
 		});
 	});
 </script>

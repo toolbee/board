@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import org.toolbee.domain.BoardVO;
 import org.toolbee.domain.Criteria;
+import org.toolbee.domain.SearchCriteria;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -64,5 +65,17 @@ public class BoardDaoImpl implements BoardDao {
 	public int countPaging(Criteria cri) throws Exception {
 
 		return sqlSession.selectOne(namespace + ".countPaging", cri);
+	}
+
+	@Override
+	public List<BoardVO> listSearch(SearchCriteria cri) throws Exception {
+
+		return sqlSession.selectList(namespace + ".listSearch", cri);
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+
+		return sqlSession.selectOne(namespace + ".listSearchCount", cri);
 	}
 }

@@ -13,44 +13,56 @@ public class PageMaker {
 	private int displayPageNum = 10; //화면에 보여지는 페이지 번호의 수
 
 	private Criteria cri;
-	
+
 	public void setCri(Criteria cri) {
 		this.cri = cri;
 	}
-	
+
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
-		
+
 		//totalCount가 설정되는 시점에 calcDate 메서드를 이용하여 페이지 계산
 		calcData();
 	}
 
 	private void calcData() {
-	
+
 		//현재 보고 있는 페이지를 통해 계산된 마지막 페이지  ex) 20, 30, ...
 		endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
-		
+
 		//마지막 페이지를 통해 계산 된 시작페이지 ex) 1, 11, 21, ....
 		startPage = (endPage - displayPageNum) + 1;
-		
+
 		//현재 총 게시글 갯수를 통해 계산 된 마지막 페이지 (실제 마지막 페이지)
 		int tempEndPage = (int) (Math.ceil(totalCount / (double) cri.getPerPageNum()));
-	
+
 		if (endPage > tempEndPage) {
 			endPage = tempEndPage;
 		}
-		
+
 		prev = startPage == 1 ? false : true;
 		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
 	}
-	
+
 	public String makeQuery(int page) {
-		
+
 		UriComponents uriComponents = UriComponentsBuilder.newInstance()
 				.queryParam("page", page)
 				.queryParam("perPageNum", cri.getPerPageNum())
 				.build();
-		
+
+		return uriComponents.toUriString();
+	}
+
+	public String makeSearch(int page) {
+
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
+				.queryParam("perPageNum", cri.getPerPageNum())
+				.queryParam("searchType", ((SearchCriteria)cri).getSearchType())
+				.queryParam("keyword", ((SearchCriteria)cri).getKeyword())
+				.build();
+
 		return uriComponents.toUriString();
 	}
 
@@ -108,5 +120,5 @@ public class PageMaker {
 				+ prev + ", next=" + next + ", displayPageNum=" + displayPageNum + ", cri=" + cri + "]";
 	}
 
-	
+
 }
